@@ -153,6 +153,9 @@ class Mikrot(object):
         return vallist
     
     def get_table(self, command, idxcol='#'):
+        """
+        Assuming that normally index coulmn is #
+        """
         listoflines = self.get_command_output(command)
         data = []
         head_line = [idx for idx,s in enumerate(listoflines) if idxcol in s][0]
