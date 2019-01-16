@@ -21,6 +21,10 @@ class Mikrot(object):
                    
                    
     def _createssh(self):
+        """
+        Have no time to figure out what exact kex/key/ciph combo is required,
+        so just copied ssh -Q output
+        """
         paramiko.Transport._preferred_kex = ('diffie-hellman-group14-sha1',
                                             'diffie-hellman-group-exchange-sha1',
                                             'diffie-hellman-group-exchange-sha256',
@@ -105,6 +109,10 @@ class Mikrot(object):
       
     
     def get_keyval_dict(self, command, keycol, valuecol, idxcol='#'):
+        """
+        Right now it works only with numeric data in columns.
+        Goota add digits=True/False later
+        """
         listoflines = self.get_command_output(command)
         head_line = [idx for idx,s in enumerate(listoflines) if idxcol in s][0]
         validx = listoflines[head_line].find(valuecol)
@@ -135,10 +143,13 @@ class Mikrot(object):
                 if (re.search(r'^\w', line[validx:]) and not re.search(r'^%s' % valuecol, line[validx:])):
                     vallist.append(line[validx:].split(' ')[0]) 
             """
+            To add some beauty it should looks like:
             if (re.search(r'^\w', line[validx:]) and not re.search(r'^%s' % valuecol, line[validx:])) or \
             (re.search(r'^\w', line[validx:]) and not re.search(r'^%s' % valuecol, line[validx:]) and \
              digits and re.search(r'\d', line[validx:validx+1])):
-                vallist.append(line[validx:].split(' ')[0]) """
+                vallist.append(line[validx:].split(' ')[0]) 
+            But no luck
+            """
         return vallist
     
     def get_table(self, command, idxcol='#'):
