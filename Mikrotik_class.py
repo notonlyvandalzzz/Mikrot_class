@@ -14,9 +14,10 @@ class Mikrot(object):
         self.pallowagent = pallowagent
         self.plookforkeys = plookforkeys
         self.encoding = encoding
-        status_msg = self.connectssh()
-        if status_msg != 'OK':
-            raise ValueError('Connection could not be established: %s' % status_msg)
+        self.connectssh()
+ #       status_msg = self.connectssh()
+#        if status_msg != 'OK':
+#            raise ValueError('Connection could not be established: %s' % status_msg)
         
                    
                    
@@ -82,19 +83,18 @@ class Mikrot(object):
         ssh_params = self._ssh_params_dict()
 
         try:
-            self.conn_handler.connect(**ssh_params)
-            msg = 'OK'
+            self.conn_handler.connect(**ssh_params)            
         except paramiko.AuthenticationException:
-            msg =  'ERR_LOGIN'
+            raise ValueError('ERR_LOGIN')
         except paramiko.SSHException as sshException:
-            msg = 'ERR_SSH_%s' % sshException
+            raise ValueError('ERR_SSH_%s' % sshException)
         except socket.error as e:
-            msg =  'ERR_SOCKET_%s' % e
+            raise ValueError('ERR_SOCKET_%s' % e)
         except socket.timeout as e:
-            msg = 'ERR_TIMEOUT_%s' % e
+            raise ValueError('ERR_TIMEOUT_%s' % e)
         except Exception as e:
-            msg = 'ERR_GENERAL: %s' % str(e)
-        return msg
+            raise ValueError('ERR_GENERAL: %s' % str(e))
+
       
     def send_command_oneway(self, command):
         _, _, _ = self.conn_handler.exec_command(command)
