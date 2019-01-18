@@ -4,7 +4,7 @@ import socket
 import pandas as pd
 
 class Mikrot(object):
-    def __init__(self, ip='', sshuser='', sshpass='', sshtimeout=15, sshport='22', pallowagent=False, plookforkeys=False,
+    def __init__(self, ip='', sshuser='', sshpass='', sshtimeout=15, sshport=22, pallowagent=False, plookforkeys=False,
               encoding='ascii'):
         self.ip = ip
         self.sshuser = sshuser
