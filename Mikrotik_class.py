@@ -10,7 +10,7 @@ class Mikrot(object):
         self.sshuser = sshuser
         self.sshpass = sshpass
         self.sshtimeout = sshtimeout
-        self.sshport = sshport
+        self.sshport = int(sshport)
         self.pallowagent = pallowagent
         self.plookforkeys = plookforkeys
         self.encoding = encoding
@@ -111,7 +111,7 @@ class Mikrot(object):
     def get_keyval_dict(self, command, keycol, valuecol, idxcol='#'):
         """
         Right now it works only with numeric data in columns.
-        Goota add digits=True/False later
+        Gotta add digits=True/False later
         """
         listoflines = self.get_command_output(command)
         head_line = [idx for idx,s in enumerate(listoflines) if idxcol in s][0]
